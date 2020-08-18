@@ -12,7 +12,7 @@ schedule* schedule_create()
 
 	if(s == NULL)
 	{   
-		perror("schedule create error\n");
+		perror("schedule_create.\n");
 		return NULL;    
 	}
 
@@ -45,9 +45,10 @@ static void* run_func(uint32_t low, uint32_t high)
 //创建协程, 并返回协程所处下标
 int coroutine_create(schedule* s, void* (*call_back)(schedule*, void*), void* args)
 {
-	int i = 0;
-	coroutine* crt = NULL;
+	assert(s);
 
+	coroutine* crt = NULL;
+	int i = 0;
 	for(i = 0; i < s->max_id; i++)
 	{
 		if(s->coroutines[i]->state == DEAD)

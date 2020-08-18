@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,13 +17,13 @@ void SetNoBlock(int fd)
 	flag |= O_NONBLOCK;
 	fcntl(fd, F_SETFL, flag);
 }
-/*
+
 int socket_init()
 {
 	int lst_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if(lst_fd == -1)
 	{
-		perror("socket.");
+		perror("socket.\n");
 		exit(1);
 	}
 	
@@ -49,7 +48,7 @@ int socket_init()
 	}
 	return lst_fd;
 }
-*/
+
 void accept_conn(int lst_fd, schedule *s, int* co_ids, void *(*call_back)(schedule *s, void *args)) 
 {
 	while(1)
@@ -69,17 +68,6 @@ void accept_conn(int lst_fd, schedule *s, int* co_ids, void *(*call_back)(schedu
 			}
 
 			co_ids[cid] = 1;
-			/*
-			int i;
-			for(i = 0; i < COROUTINE_SIZE; i++)
-			{
-				if(co_ids[i] == -1)
-				{
-					co_ids[i] = cid;
-					break;
-				}
-			}
-			*/
 			coroutine_running(s, cid);
 		}
 		//如果当前没有连接，则切换至协程上下文中继续运行
@@ -135,25 +123,6 @@ void *handle(schedule  *s, void *args)
 		}
 	}
 }
-int socket_init() {
-	int lfd = socket(AF_INET, SOCK_STREAM, 0);
-	if ( lfd == -1 ) perror("socket"),exit(1);
-
-	int op = 1;
-	setsockopt(lfd, SOL_SOCKET, SO_REUSEADDR, &op, sizeof(op));
-	
-	struct sockaddr_in addr;
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(9200);
-	addr.sin_addr.s_addr = inet_addr("192.168.0.128");
-	int r = bind(lfd, (struct sockaddr*)&addr, sizeof(addr));
-	if ( r == -1 ) perror("bind"),exit(1);
-	
-	listen(lfd, SOMAXCONN);
-
-	return lfd;
-}
-
 
 int main()
 {

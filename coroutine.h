@@ -35,7 +35,7 @@ typedef struct schedule
 schedule* schedule_create();
 
 //创建协程, 并返回协程所处下标
-int coroutine_create(schedule* s, void* (*call_back)(schedule*, void*), void* args);
+int coroutine_create(schedule* s, void* (*call_back)(schedule*, void* ), void* args);
 
 //协程切换调度
 void coroutine_yield(schedule* s);

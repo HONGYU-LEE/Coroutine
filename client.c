@@ -16,7 +16,7 @@ int main( void ) {
 	int ret = connect(fd, (struct sockaddr*)&addr, sizeof(addr));
 	if ( ret == -1 )
 	{
-		perror("connect");
+		perror("connect.\n");
 		exit(1);
 	}
 	
