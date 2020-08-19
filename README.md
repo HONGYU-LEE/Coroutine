@@ -13,3 +13,7 @@ CentOS7、vim、gcc、gdb、git、MakeFile
 - 协程具有独立的栈，确保运行效率。
 ## 适用场景
 协程主要适用于I/O密集型的场景，如示例中的TCP服务器。在传统的多路复用+多线程/多进程的做法，每并发一个进程/线程就会消耗内存，并且最严重的问题就是由系统来进行调度切换带来的严重损耗，而协程刚好能够解决这些问题。
+## 博客
+[ucontext族函数的使用及原理分析](https://github.com/HONGYU-LEE/coroutine/blob/master/doc/ucontext.md)
+
+[使用说明及示例](https://github.com/HONGYU-LEE/coroutine/blob/master/doc/instructions.md)
