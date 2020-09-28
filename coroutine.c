@@ -27,7 +27,7 @@ schedule* schedule_create()
 //协程的执行函数, 因为makecontext接收的函数参数只能为整型，所以这里要进行一层封装
 static void* run_func(uint32_t low, uint32_t high)
 {   
-    uintptr_t ptr = (uintptr_t) low | ((uintptr_t) high << 2);
+    uintptr_t ptr = (uintptr_t) low | ((uintptr_t) high << 32);
 	schedule* s = (schedule*) ptr;
 
 	if(s->cur_id != -1)
@@ -76,7 +76,7 @@ int coroutine_create(schedule* s, void* (*call_back)(schedule*, void*), void* ar
 	crt->ctx.uc_link = &s->main;
 
 	uintptr_t ptr = (uintptr_t) s;
-	makecontext(&crt->ctx, (void (*)())&run_func, 2, (uint32_t)ptr, (uint32_t)(ptr >> 2));
+	makecontext(&crt->ctx, (void (*)())&run_func, 2, (uint32_t)ptr, (uint32_t)(ptr >> 32));
 
 	return i;
 }
